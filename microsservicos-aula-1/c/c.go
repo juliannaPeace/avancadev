@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 )
 
 type Coupon struct {
@@ -39,6 +40,7 @@ func main() {
 
 	http.HandleFunc("/", home)
 	http.ListenAndServe(":9092", nil)
+	http.PostForm("http://localhost:8004/consultings",url.Values{})
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
