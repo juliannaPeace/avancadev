@@ -1,0 +1,33 @@
+version: '3'
+
+services: 
+    microservicoa: 
+        build: ./a
+        ports: 
+            - 9090:9090
+    
+    microservicob: 
+        build: ./b
+        # image: jujubas:latest
+        # depends_on:
+        #     - microservicoa
+        ports: 
+            - 9091:9091
+
+    microservicoc: 
+        build: ./c
+        depends_on:
+            - microservicob
+        ports: 
+            - 9092:9092
+    
+    rabbit:
+        image: "rabbitmq:3-management"
+        environment:
+            RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+            RABBITMQ_DEFAULT_USER: "rabbitmq"
+            RABBITMQ_DEFAULT_PASS: "rabbitmq"
+            RABBITMQ_DEFAULT_VHOST: "/"
+        ports:
+        - "15672:15672"
+        - "5672:5672"
